@@ -3,6 +3,8 @@ library google_books;
 import 'package:dio/dio.dart';
 import 'exceptions/BookNotFoundException.dart';
 
+export 'exceptions/BookNotFoundException.dart';
+
 class GoogleBookAPI {
   static Future<String> findTitleByISBN({required String isbn}) async {
     try {
