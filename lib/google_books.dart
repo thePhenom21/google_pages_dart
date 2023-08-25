@@ -6,6 +6,7 @@ import 'exceptions/BookNotFoundException.dart';
 export 'exceptions/BookNotFoundException.dart';
 
 class GoogleBookAPI {
+  //static method to get a book's title with it's isbn (it can either be isbn10 or 13 but without the "-" sign)
   static Future<String> findTitleByISBN({required String isbn}) async {
     try {
       Response res = await Dio()
@@ -22,6 +23,7 @@ class GoogleBookAPI {
     }
   }
 
+  //static method to find a title by a word in it
   static Future<List<String>> findTitleByWord({required String word}) async {
     try {
       Response res = await Dio()
@@ -47,6 +49,7 @@ class GoogleBookAPI {
     }
   }
 
+  //static method to find the description of a book by it's isbn
   static Future<String> findDescriptionByISBN({required String isbn}) async {
     try {
       Response res = await Dio()
@@ -63,6 +66,7 @@ class GoogleBookAPI {
     }
   }
 
+  //static method to find a book by it's author's name
   static Future<List<String>> findTitleByAuthor(
       {required String author}) async {
     try {
