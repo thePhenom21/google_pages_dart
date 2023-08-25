@@ -2,8 +2,10 @@ library google_books;
 
 import 'package:dio/dio.dart';
 import 'exceptions/BookNotFoundException.dart';
+import 'models/Book.dart';
 
 export 'exceptions/BookNotFoundException.dart';
+export 'models/Book.dart';
 
 class GoogleBookAPI {
   //static method to get a book's title with it's isbn (it can either be isbn10 or 13 but without the "-" sign)
@@ -81,6 +83,29 @@ class GoogleBookAPI {
         }
 
         return Stream.fromIterable(titles).distinct().toList();
+      } else {
+        throw BookNotFoundException(message: "No book found with this isbn.");
+      }
+    } catch (err) {
+      throw BookNotFoundException(
+          message:
+              "There is no description for this book or the book doesn't exist in the Google's database.");
+    }
+  }
+
+  static Future<Book> findBookByISBN({required String isbn}) async {
+    try {
+      Response res = await Dio()
+          .get("https://www.googleapis.com/books/v1/volumes?q=isbn:$isbn");
+      if (res.statusCode == 200 && res.data["totalItems"] != 0) {
+        Map<String, dynamic> m = res.data["items"][0]["volumeInfo"];
+        return Book(
+            title: m["title"],
+            author: m["authors"][0],
+            description: m["description"],
+            publishDate: m["publishedDate"],
+            publisher: m["publisher"],
+            pageCount: m["pageCount"]);
       } else {
         throw BookNotFoundException(message: "No book found with this isbn.");
       }

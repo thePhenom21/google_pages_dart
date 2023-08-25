@@ -1,7 +1,9 @@
 name: google_books
-description: A new Flutter package project.
+description: A project that utilizes the google book api to search for book in various ways.
 version: 0.0.1
-homepage:
+repository: "https://github.com/thePhenom21/google_pages_dart"
+
+
 
 environment:
   sdk: '>=3.1.0 <4.0.0'
